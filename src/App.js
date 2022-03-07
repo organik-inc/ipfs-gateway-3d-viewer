@@ -17,6 +17,7 @@ const App = () => {
       const params = new URLSearchParams(window.location.search);
       const object = params.get("object");
       const name = params.get("filename");
+      const base = params.get("base");
       const customName = params.get("customname");
       if (name) {
         setFilename(name);
@@ -24,12 +25,12 @@ const App = () => {
       if (customName) {
         setCustomName(customName);
       }
-      const baseUrl =
+      const baseUrl = base ? base :
         `${window.location.origin}${window.location.pathname}/`.split(
           "ipfs/"
         )[0];
       console.log("BASE URL: ", baseUrl);
-      const url = `${baseUrl}ipfs/${object}?filename=${name ? name : filename}`;
+      const url = `${baseUrl}${base ? '': 'ipfs'}/${object}?filename=${name ? name : filename}`;
       console.log("Full URL: ", url);
       setUrl(url);
       return () => {
@@ -70,7 +71,7 @@ const App = () => {
         />
         <meta
           property="og:description"
-          content="A 3D model hosted on IPFS + Pinata"
+          content="A 3D model created by Organik hosted on IPFS + Pinata"
         />
         <meta property="og:type" content="object" />
       </Helmet>
@@ -78,7 +79,7 @@ const App = () => {
         className="online_3d_viewer"
         style={{ width: dimensions.width, height: dimensions.height }}
         model={objectUrl}
-        camera="-1.5,-3.0,2.0,0,0,0,0,0,1"
+        camera="4,5,2.0,0,0,0,0,0,1"
       ></div>
     </div>
   );
